@@ -1,0 +1,19 @@
+{
+  "name": "productstore",
+  "version": "1.0.0",
+  "description": "Product Store automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "qa",
+    "ui",
+    "automation"
+  ],
+  "author": "Nicolas Rivera",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^10.3.0"
+  }
+}
