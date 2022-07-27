@@ -4,7 +4,7 @@
   "description": "Product Store automation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx cypress run"
   },
   "keywords": [
     "qa",
@@ -15,5 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "cypress": "^10.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nicolasgrivera/Cypress-ProductStore"
   }
+  
 }
