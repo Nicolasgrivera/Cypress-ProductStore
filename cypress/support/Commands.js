@@ -118,12 +118,24 @@ Cypress.Commands.add('createRandomUser', ()=>{
 
 Cypress.Commands.add('multiclickForCarousel', function elementToClick(elementToClick) {
 
-    for(let n = 0; n < 5; n ++){
+    for(let n = 0; n < 4; n ++){
         cy.wait(1000)
         elementToClick();
         
 
 }})
+
+Cypress.Commands.add('imageValidator', function imageToValidate() {
+    cy.get('.active > .d-block').should('have.attr', 'src', 'Samsung1.jpg')
+    cy.get('.carousel-control-next-icon').click()
+    cy.get('.active > .d-block').should('have.attr', 'src', 'nexus1.jpg')
+    cy.get('.carousel-control-next-icon').click()
+
+
+    //for(n = 0; n < Images.length; n++){}
+
+    
+})
 
 
 /*

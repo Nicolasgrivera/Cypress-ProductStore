@@ -87,6 +87,16 @@ class navPageObj {
     carouselPreviousButton() {
         return cy.get('.carousel-control-prev-icon').click()
     }
+
+    samsungImage() {
+        cy.get('.active > .d-block').should('have.attr', 'src', 'Samsung1.jpg')
+    }
+
+    nexusImage() {
+        cy.get('.active > .d-block').should('have.attr', 'src', 'nexus1.jpg')
+    }
+
+
 }
 
 export default navPageObj
