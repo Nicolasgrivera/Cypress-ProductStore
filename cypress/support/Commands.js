@@ -116,6 +116,15 @@ Cypress.Commands.add('createRandomUser', ()=>{
     cy.validateAlert(signInSuccessMessage);
 })
 
+Cypress.Commands.add('multiclickForCarousel', function elementToClick(elementToClick) {
+
+    for(let n = 0; n < 5; n ++){
+        cy.wait(1000)
+        elementToClick();
+        
+
+}})
+
 
 /*
 Cypress.Commands.add("validateEmailInput", () => {

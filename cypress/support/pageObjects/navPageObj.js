@@ -12,7 +12,6 @@ class navPageObj {
         return cy.get('#recipient-email')
     }
     
-
     contactName(){
         return cy.get('#recipient-name')
     }
@@ -79,6 +78,14 @@ class navPageObj {
 
     logInButton() {
         return cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary')
+    }
+
+    carouselNextButton() {
+        return cy.get('.carousel-control-next-icon').click()
+    }
+
+    carouselPreviousButton() {
+        return cy.get('.carousel-control-prev-icon').click()
     }
 }
 
