@@ -72,12 +72,14 @@ Cypress.Commands.add('validateAlert', (message)=> {
     })
 })
 
-//---- Contact form validations  ----//
+//----  form validation  ----//
 
-Cypress.Commands.add("contactValidation", (input,userInformation) =>{
+Cypress.Commands.add("formValidation", (input,userInformation) =>{
     cy.wait(500)
     input(input).should("exist").click().type(userInformation).should('have.value', userInformation)
 })
+
+//---- Contact form validations  ----//
 
 Cypress.Commands.add("contactWholeValidation", () =>{
     
@@ -90,9 +92,9 @@ Cypress.Commands.add("contactWholeValidation", () =>{
     let userMessage = fixtureFile.message;
 
     cy.accessContact();
-    cy.contactValidation(inputEmail,userEmail);
-    cy.contactValidation(inputName,userName);
-    cy.contactValidation(inputMessage,userMessage);
+    cy.formValidation(inputEmail,userEmail);
+    cy.formValidation(inputName,userName);
+    cy.formValidation(inputMessage,userMessage);
     cy.sendMessageValidation();
 })
 
@@ -102,21 +104,21 @@ Cypress.Commands.add("sendMessageValidation", () =>{
     cy.validateAlert(webMessage);
 })
 
-//---- Cart validations----//
+//---- LogIn validations ----//
 
-Cypress.Commands.add("accessCart", () =>{
-    NavPageObj.cart().click();
-    cy.wait(1000);
+Cypress.Commands.add('loginUser', () => {
+
+    let inputName = LoginPageObj.username;
+    let inputPassword = LoginPageObj.password;
+  
+    let userName = fixtureFile.name;
+    let userPassword= fixtureFile.password;
+    NavPageObj.logInButton().click()
+    cy.wait(500)
+    cy.formValidation(inputName,userName);
+    cy.formValidation(inputPassword,userPassword);
 })
- 
-Cypress.Commands.add("cartFunctionalityValidation", ()=>{
-    let cartMessage = "Product added"
-    cy.wait(500);
-    CatalogPageObj.catalogFirstItem().click();
-    cy.wait(1000);
-    CatalogPageObj.addToCartButton().click();
-    cy.validateAlert(cartMessage);
-})
+
 
 //---- Sign up validations ----//
 
@@ -179,3 +181,19 @@ Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
         }}
 
 }})
+
+//---- Cart validations----//
+
+Cypress.Commands.add("accessCart", () =>{
+    NavPageObj.cart().click();
+    cy.wait(1000);
+})
+ 
+Cypress.Commands.add("cartFunctionalityValidation", ()=>{
+    let cartMessage = "Product added"
+    cy.wait(500);
+    CatalogPageObj.catalogFirstItem().click();
+    cy.wait(1000);
+    CatalogPageObj.addToCartButton().click();
+    cy.validateAlert(cartMessage);
+})

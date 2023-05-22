@@ -1,14 +1,14 @@
 class loginPageObj {
 
-    logInUsername() {
+    username() {
         return cy.get('#loginusername')
     }
 
-    logInPassword() {
+    password() {
         return cy.get('#loginpassword')
     }
 
-    logInButton() {
+    button() {
         return cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary')
     }
 
