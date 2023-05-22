@@ -123,6 +123,15 @@ Cypress.Commands.add('loginUser', () => {
 
 //---- Sign up validations ----//
 
+Cypress.Commands.add('signUpTitle', () => {
+    NavPageObj.signUpButton().click()
+    SignUpPageObj.title().then(($sut)=> {
+        let title = "Sign up"
+        SignUpPageObj.title().should("exist").should('have.text', title)
+        expect($sut).to.have.text(title)
+    })
+})
+
 Cypress.Commands.add('createRandomUser', ()=>{
 
     let signInSuccessMessage = 'Sign up successful.'
@@ -130,7 +139,6 @@ Cypress.Commands.add('createRandomUser', ()=>{
 
     NavPageObj.signUpButton().click()
     cy.wait(1000);
-    // Make below code more efficient
     SignUpPageObj.username().click().type(randomNumber);
     SignUpPageObj.password().click().type(randomNumber);
     SignUpPageObj.button().click();
@@ -140,7 +148,7 @@ Cypress.Commands.add('createRandomUser', ()=>{
 
 Cypress.Commands.add('createAlreadyRegisteredUser', () => {
 
-    let signInErrorMessage = 'This user already exist.'
+    let signUpErrorMessage = 'This user already exist.'
 
     let inputName = SignUpPageObj.username;
     let inputPassword = SignUpPageObj.password;
@@ -153,7 +161,7 @@ Cypress.Commands.add('createAlreadyRegisteredUser', () => {
     cy.formValidation(inputName,userName);
     cy.formValidation(inputPassword,userPassword);
     SignUpPageObj.button().click()
-    cy.validateAlert(signInErrorMessage);
+    cy.validateAlert(signUpErrorMessage);
 })
 
 //---- Go back and forward with the carousel ----//
