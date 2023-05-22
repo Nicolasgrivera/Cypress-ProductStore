@@ -117,6 +117,7 @@ Cypress.Commands.add('loginUser', () => {
     cy.wait(500)
     cy.formValidation(inputName,userName);
     cy.formValidation(inputPassword,userPassword);
+    LoginPageObj.button().click()
 })
 
 
@@ -134,6 +135,25 @@ Cypress.Commands.add('createRandomUser', ()=>{
     SignUpPageObj.password().click().type(randomNumber);
     SignUpPageObj.button().click();
     cy.validateAlert(signInSuccessMessage);
+    
+})
+
+Cypress.Commands.add('createAlreadyRegisteredUser', () => {
+
+    let signInErrorMessage = 'This user already exist.'
+
+    let inputName = SignUpPageObj.username;
+    let inputPassword = SignUpPageObj.password;
+  
+    let userName = fixtureFile.name;
+    let userPassword= fixtureFile.password;
+
+    NavPageObj.signUpButton().click()
+    cy.wait(500)
+    cy.formValidation(inputName,userName);
+    cy.formValidation(inputPassword,userPassword);
+    SignUpPageObj.button().click()
+    cy.validateAlert(signInErrorMessage);
 })
 
 //---- Go back and forward with the carousel ----//

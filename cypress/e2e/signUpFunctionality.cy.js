@@ -7,3 +7,7 @@ describe('SignUp suite', () => {
   it('Create user functionality', ()=>{
     cy.createRandomUser()
   })
+
+  it.only('Create already user functionality', ()=>{
+    cy.createAlreadyRegisteredUser()
+  })
