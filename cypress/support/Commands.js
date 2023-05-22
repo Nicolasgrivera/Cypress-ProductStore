@@ -116,27 +116,56 @@ Cypress.Commands.add('createRandomUser', ()=>{
     cy.validateAlert(signInSuccessMessage);
 })
 
-Cypress.Commands.add('multiclickForCarousel', function elementToClick(elementToClick) {
+Cypress.Commands.add('multiclickForCarousel', function elementToClick() {
 
-    for(let n = 0; n < 4; n ++){
+    for(let n = 0; n <= 2; n ++){
         cy.wait(1000)
-        elementToClick();
+        NavPageObj.carouselNextButton().then(($cnb)=> {
+            const clickNextButton = $cnb.click();
+        })
+        if(n >= 2){
+            for (let i = 0; i <= 2;i ++){
+                cy.wait(1000)
+                NavPageObj.carouselPreviousButton().then(($cpb)=> {
+                    const clickPreviousButton = $cpb.click();
+                })
+            }
+            
+        }
+        //nextButton();
+        //function nextButton () {
+            //NavPageObj.carouselNextButton().click()
+        //};
         
 
 }})
 
-Cypress.Commands.add('imageValidator', function imageToValidate() {
-    cy.get('.active > .d-block').should('have.attr', 'src', 'Samsung1.jpg')
-    cy.get('.carousel-control-next-icon').click()
-    cy.get('.active > .d-block').should('have.attr', 'src', 'nexus1.jpg')
-    cy.get('.carousel-control-next-icon').click()
+Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
 
-
-    //for(n = 0; n < Images.length; n++){}
-
+    for(let n = 0; n <= 2; n ++){
     
-})
+        let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
+        cy.wait(100)
+        NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
+        nextButton();
+        
+        if(n >= 2){
+            for (let i = 0; i <= 2; i++){
+                let imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
+                cy.wait(100)
+                NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
+                previousButton();
+        }}
 
+            function nextButton () {
+                NavPageObj.carouselNextButton().click()
+            };
+
+            function previousButton () {
+                NavPageObj.carouselPreviousButton().click()
+            };
+
+}})
 
 /*
 Cypress.Commands.add("validateEmailInput", () => {

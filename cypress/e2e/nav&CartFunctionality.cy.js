@@ -30,20 +30,26 @@ describe('Nav', () => {
     cy.createRandomUser()
   })
 
-it("Carousel navigation", () =>{
-  const carouselNextButton = NavPageObj.carouselNextButton;
-  const carouselPreviousButton = NavPageObj.carouselPreviousButton;
+it.only("Carousel navigation", () =>{
+  //const carouselNextButton = NavPageObj.carouselNextButton;
+  //const carouselPreviousButton = NavPageObj.carouselPreviousButton;
 
-  cy.multiclickForCarousel(carouselNextButton);
-  cy.multiclickForCarousel(carouselPreviousButton);
+  cy.multiclickForCarousel();
 
 })
 
-it.only("Image validation", () =>{
+it("Image validation", () =>{
+
+  cy.carouselValidation();
+
+  //cy.multiclickForCarousel(carouselNextButton);
+  //cy.multiclickForCarousel(carouselPreviousButton);
+
 
   //let images = [NavPageObj.samsungImage(),NavPageObj.nexusImage()]
+  //let arr = [NavPageObj.samsungImage(),NavPageObj.nexusImage()];
 
-cy.imageValidator();
+//cy.imageValidator(arr[0],carouselNextButton);
 })
 
   it("carousel test",() =>{

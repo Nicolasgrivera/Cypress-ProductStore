@@ -81,21 +81,16 @@ class navPageObj {
     }
 
     carouselNextButton() {
-        return cy.get('.carousel-control-next-icon').click()
+        return cy.get('.carousel-control-next-icon')
     }
 
     carouselPreviousButton() {
-        return cy.get('.carousel-control-prev-icon').click()
+        return cy.get('.carousel-control-prev-icon')
     }
 
-    samsungImage() {
-        cy.get('.active > .d-block').should('have.attr', 'src', 'Samsung1.jpg')
+    actualImage() {
+        return cy.get('.active > .d-block')
     }
-
-    nexusImage() {
-        cy.get('.active > .d-block').should('have.attr', 'src', 'nexus1.jpg')
-    }
-
 
 }
 
