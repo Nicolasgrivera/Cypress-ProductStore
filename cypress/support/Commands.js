@@ -1,16 +1,28 @@
 //---- PO import and json data  ----//
+import contactPageObj from "./pageObjects/contactPageObj";
+import aboutUsPageObj from "./pageObjects/aboutUsPageObj";
 import navPageObj from "./pageObjects/navPageObj";
+import loginPageObj from "./pageObjects/loginPageObj";
+import signUpPageObj from "./pageObjects/signUpPageObj";
 import fixtureFile from '../fixtures/user.json'
 
-let NavPageObj;
 let testData;
+let NavPageObj;
+let SignUpPageObj
+let LoginPageObj;
+let AboutUsPageObj
+let ContactPageObj
 
 beforeEach(()=> {
     cy.fixture('user.json').then(function(dataJson) {
       testData = dataJson;
     })
     cy.visit("/");
-    NavPageObj = new navPageObj
+    NavPageObj = new navPageObj;
+    SignUpPageObj = new signUpPageObj;
+    LoginPageObj = new loginPageObj;
+    AboutUsPageObj = new aboutUsPageObj;
+    ContactPageObj = new contactPageObj;
 })
 
 //---- Menu access ----//
@@ -32,13 +44,13 @@ Cypress.Commands.add("accessAboutUs", () => {
 Cypress.Commands.add("validateVideoName", () => {
     let videoName = 'About us'
     cy.wait(1000);
-    NavPageObj.aboutUsVideoName()
+    AboutUsPageObj.aboutUsVideoName()
     .should('contain', videoName);
 })
 
 Cypress.Commands.add("validateVideo", () =>{
     cy.wait(1000);
-    NavPageObj.aboutUsVideo()
+    AboutUsPageObj.aboutUsVideo()
     .should('have.prop', 'paused', true)
     .and('have.prop', 'ended', false)
     .then(($video) =>{
@@ -63,9 +75,9 @@ Cypress.Commands.add("contactValidation", (input,userInformation) =>{
 
 Cypress.Commands.add("contactWholeValidation", () =>{
     
-    let inputEmail = NavPageObj.contactEmail;
-    let inputName = NavPageObj.contactName;
-    let inputMessage = NavPageObj.contactMessage;
+    let inputEmail = ContactPageObj.contactEmail;
+    let inputName = ContactPageObj.contactName;
+    let inputMessage = ContactPageObj.contactMessage;
   
     let userEmail = fixtureFile.email;
     let userName = fixtureFile.name;
@@ -80,7 +92,7 @@ Cypress.Commands.add("contactWholeValidation", () =>{
 
 Cypress.Commands.add("sendMessageValidation", () =>{
     let webMessage = 'Thanks for the message!!'
-    NavPageObj.buttonSendMessage().should("exist").click();
+    ContactPageObj.buttonSendMessage().should("exist").click();
     cy.validateAlert(webMessage);
 })
 
@@ -110,13 +122,15 @@ Cypress.Commands.add('createRandomUser', ()=>{
     NavPageObj.signUpNavButton().click()
     cy.wait(1000);
     // Make below code more efficient
-    NavPageObj.signUpUsername().click().type(randomNumber);
-    NavPageObj.signUpPassword().click().type(randomNumber);
-    NavPageObj.signUpButton().click();
+    SignUpPageObj.signUpUsername().click().type(randomNumber);
+    SignUpPageObj.signUpPassword().click().type(randomNumber);
+    SignUpPageObj.signUpButton().click();
     cy.validateAlert(signInSuccessMessage);
 })
 
-Cypress.Commands.add('multiclickForCarousel', function elementToClick() {
+//---- Go back and forward with the carousel ----//
+
+Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousButton() {
 
     for(let n = 0; n <= 2; n ++){
         cy.wait(1000)
@@ -132,13 +146,10 @@ Cypress.Commands.add('multiclickForCarousel', function elementToClick() {
             }
             
         }
-        //nextButton();
-        //function nextButton () {
-            //NavPageObj.carouselNextButton().click()
-        //};
-        
 
 }})
+
+//---- Go back and forward with the carousel and Image validation ----//
 
 Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
 
@@ -147,23 +158,21 @@ Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
         let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
         cy.wait(100)
         NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
-        nextButton();
+        NavPageObj.carouselNextButton().then(($cnb)=> {
+            const clickNextButton = $cnb.click();
+        });
+        //nextButton();
         
         if(n >= 2){
             for (let i = 0; i <= 2; i++){
                 let imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
                 cy.wait(100)
                 NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
-                previousButton();
+                NavPageObj.carouselPreviousButton().then(($cpb)=> {
+                    const clickPreviousButton = $cpb.click();
+                });
+                //previousButton();
         }}
-
-            function nextButton () {
-                NavPageObj.carouselNextButton().click()
-            };
-
-            function previousButton () {
-                NavPageObj.carouselPreviousButton().click()
-            };
 
 }})
 
