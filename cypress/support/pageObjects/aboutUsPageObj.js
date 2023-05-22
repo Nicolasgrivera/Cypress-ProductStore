@@ -1,10 +1,10 @@
 class aboutUsPageObj {
 
-    aboutUsVideoName(){
+    videoName(){
         return cy.get('#videoModalLabel')
     }
 
-    aboutUsVideo(){
+    video(){
         return cy.get('#example-video_html5_api')
     }
 }

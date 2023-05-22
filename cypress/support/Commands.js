@@ -4,14 +4,18 @@ import aboutUsPageObj from "./pageObjects/aboutUsPageObj";
 import navPageObj from "./pageObjects/navPageObj";
 import loginPageObj from "./pageObjects/loginPageObj";
 import signUpPageObj from "./pageObjects/signUpPageObj";
-import fixtureFile from '../fixtures/user.json'
+import catalogPageObj from "./pageObjects/catalogPageObj";
+import fixtureFile from '../fixtures/user.json';
+import carouselPageObj from "./pageObjects/carouselPageObj";
 
 let testData;
 let NavPageObj;
 let SignUpPageObj
 let LoginPageObj;
-let AboutUsPageObj
-let ContactPageObj
+let AboutUsPageObj;
+let ContactPageObj;
+let CatalogPageObj;
+let CarouselPageObj;
 
 beforeEach(()=> {
     cy.fixture('user.json').then(function(dataJson) {
@@ -23,6 +27,8 @@ beforeEach(()=> {
     LoginPageObj = new loginPageObj;
     AboutUsPageObj = new aboutUsPageObj;
     ContactPageObj = new contactPageObj;
+    CatalogPageObj = new catalogPageObj;
+    CarouselPageObj = new carouselPageObj;
 })
 
 //---- Menu access ----//
@@ -44,13 +50,13 @@ Cypress.Commands.add("accessAboutUs", () => {
 Cypress.Commands.add("validateVideoName", () => {
     let videoName = 'About us'
     cy.wait(1000);
-    AboutUsPageObj.aboutUsVideoName()
+    AboutUsPageObj.videoName()
     .should('contain', videoName);
 })
 
 Cypress.Commands.add("validateVideo", () =>{
     cy.wait(1000);
-    AboutUsPageObj.aboutUsVideo()
+    AboutUsPageObj.video()
     .should('have.prop', 'paused', true)
     .and('have.prop', 'ended', false)
     .then(($video) =>{
@@ -106,9 +112,9 @@ Cypress.Commands.add("accessCart", () =>{
 Cypress.Commands.add("cartFunctionalityValidation", ()=>{
     let cartMessage = "Product added"
     cy.wait(500);
-    NavPageObj.catalogFirstItem().click();
+    CatalogPageObj.catalogFirstItem().click();
     cy.wait(1000);
-    NavPageObj.addToCartButton().click();
+    CatalogPageObj.addToCartButton().click();
     cy.validateAlert(cartMessage);
 })
 
@@ -119,12 +125,12 @@ Cypress.Commands.add('createRandomUser', ()=>{
     let signInSuccessMessage = 'Sign up successful.'
     let randomNumber = (Math.random() * Math.random() + Math.random());
 
-    NavPageObj.signUpNavButton().click()
+    NavPageObj.signUpButton().click()
     cy.wait(1000);
     // Make below code more efficient
-    SignUpPageObj.signUpUsername().click().type(randomNumber);
-    SignUpPageObj.signUpPassword().click().type(randomNumber);
-    SignUpPageObj.signUpButton().click();
+    SignUpPageObj.username().click().type(randomNumber);
+    SignUpPageObj.password().click().type(randomNumber);
+    SignUpPageObj.button().click();
     cy.validateAlert(signInSuccessMessage);
 })
 
@@ -134,13 +140,13 @@ Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousBu
 
     for(let n = 0; n <= 2; n ++){
         cy.wait(1000)
-        NavPageObj.carouselNextButton().then(($cnb)=> {
+        CarouselPageObj.nextButton().then(($cnb)=> {
             const clickNextButton = $cnb.click();
         })
         if(n >= 2){
             for (let i = 0; i <= 2;i ++){
                 cy.wait(1000)
-                NavPageObj.carouselPreviousButton().then(($cpb)=> {
+                CarouselPageObj.previousButton().then(($cpb)=> {
                     const clickPreviousButton = $cpb.click();
                 })
             }
@@ -157,34 +163,19 @@ Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
     
         let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
         cy.wait(100)
-        NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
-        NavPageObj.carouselNextButton().then(($cnb)=> {
+        CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
+        CarouselPageObj.nextButton().then(($cnb)=> {
             const clickNextButton = $cnb.click();
         });
-        //nextButton();
         
         if(n >= 2){
             for (let i = 0; i <= 2; i++){
                 let imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
                 cy.wait(100)
-                NavPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
-                NavPageObj.carouselPreviousButton().then(($cpb)=> {
+                CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
+                CarouselPageObj.previousButton().then(($cpb)=> {
                     const clickPreviousButton = $cpb.click();
                 });
-                //previousButton();
         }}
 
 }})
-
-/*
-Cypress.Commands.add("validateEmailInput", () => {
-    cy.wait(2000);
-    NavPageObj.contactEmail().should("exist").click().type(testData.email).should('have.value', testData.email);
-})
-Cypress.Commands.add("validateNameInput", () => {
-    NavPageObj.contactName().should("exist").click().type(testData.name).should('have.value', testData.name);
-})
-Cypress.Commands.add("validateMessageInput", () => {
-    NavPageObj.contactMessage().should("exist").click().type(testData.message).should('have.value', testData.message)
-})
-*/

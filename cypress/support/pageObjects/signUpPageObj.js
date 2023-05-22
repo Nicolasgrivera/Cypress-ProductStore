@@ -1,13 +1,13 @@
 class signUpPageObj {
-    signUpUsername() {
+    username() {
         return cy.get('#sign-username')
     }
 
-    signUpPassword() {
+    password() {
         return cy.get('#sign-password')
     }
 
-    signUpButton () {
+    button () {
         return cy.get('#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary')
     }
 }

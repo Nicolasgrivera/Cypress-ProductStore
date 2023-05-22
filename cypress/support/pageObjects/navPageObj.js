@@ -24,24 +24,12 @@ class navPageObj {
         return cy.get('.col-sm-12 > .btn')
     }
 
-    signUpNavButton() {
+    signUpButton() {
         return cy.get('#signin2')
     }
 
-    logInNavButton() {
+    logInButton() {
         return cy.get('#login2')
-    }
-
-    carouselNextButton() {
-        return cy.get('.carousel-control-next-icon')
-    }
-
-    carouselPreviousButton() {
-        return cy.get('.carousel-control-prev-icon')
-    }
-
-    actualImage() {
-        return cy.get('.active > .d-block')
     }
 
 }
