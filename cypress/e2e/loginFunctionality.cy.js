@@ -11,3 +11,13 @@ describe('LogIn suite', () => {
 it('Login user functionality', () => {
   cy.loginUser();
 })
+
+it('Login user. Nav correctly changes "sign in" to a welcome message', () => {
+  cy.loginUser();
+  cy.wait(3000)
+  cy.welcomeLoginMessageValidation();
+})
+
+it.only('Login user. Nav correctly changes "log in" to a Logout', () => {
+  cy.loginChangesToLogout()
+})

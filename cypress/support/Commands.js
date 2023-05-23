@@ -120,6 +120,39 @@ Cypress.Commands.add('loginUser', () => {
     LoginPageObj.button().click()
 })
 
+Cypress.Commands.add("welcomeLoginMessageValidation",() => {
+
+    NavPageObj.welcome().then(($wmv)=> {
+        let userName = fixtureFile.name;
+        let message = 'Welcome ' + userName;
+    
+        NavPageObj.welcome().should("exist").should('have.text', message)
+        expect($wmv).to.have.text(message)
+    })
+
+})
+
+Cypress.Commands.add('loginChangesToLogout',()=>{
+    NavPageObj.logInButton().then(($lin)=> {
+
+        let login = 'Log in';
+
+        NavPageObj.logInButton().should("exist").should('have.text', login)
+        expect($lin).to.have.text(login);
+    })
+
+    cy.loginUser()
+    cy.wait(3000)
+
+    NavPageObj.logOut().then(($lout)=>{
+
+        let logout = 'Log out';
+
+        NavPageObj.logOut().should("exist").should('have.text', logout)
+        expect($lout).to.have.text(logout);
+    })
+})
+
 
 //---- Sign up validations ----//
 
@@ -224,4 +257,16 @@ Cypress.Commands.add("cartFunctionalityValidation", ()=>{
     cy.wait(1000);
     CatalogPageObj.addToCartButton().click();
     cy.validateAlert(cartMessage);
+})
+
+Cypress.Commands.add("welcomeLoginMessageValidation",() => {
+
+    NavPageObj.welcome().then(($wmv)=> {
+        let userName = fixtureFile.name;
+        let message = 'Welcome ' + userName;
+    
+        NavPageObj.welcome().should("exist").should('have.text', message)
+        expect($wmv).to.have.text(message)
+    })
+
 })
