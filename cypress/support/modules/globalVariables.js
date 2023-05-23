@@ -1,5 +1,5 @@
 
-import "../Commands"
+import "../commands"
 /*
 let testData;
 let inputEmail

@@ -26,4 +26,8 @@ class footerPageObj {
     icon() {
         return cy.get('h4 > img')
     }
+
+    copyright() {
+        return cy.get('.m-0')
+    }
 }

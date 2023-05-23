@@ -24,6 +24,14 @@ class navPageObj {
         return cy.get('#login2')
     }
 
+    logOut() {
+        return cy.get('#logout2')
+    }
+
+    welcome() {
+        return cy.get('#nameofuser')
+    }
+
 }
 
 export default navPageObj
