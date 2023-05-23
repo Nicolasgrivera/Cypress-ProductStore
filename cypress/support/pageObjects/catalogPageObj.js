@@ -1,5 +1,5 @@
 class catalogPageObj {
-    catalogFirstItem() {
+    firstItem() {
         return cy.get(':nth-child(1) > .card > .card-block > .card-title > .hrefch')
     }
 

@@ -220,7 +220,7 @@ Cypress.Commands.add("accessCart", () =>{
 Cypress.Commands.add("cartFunctionalityValidation", ()=>{
     let cartMessage = "Product added"
     cy.wait(500);
-    CatalogPageObj.catalogFirstItem().click();
+    CatalogPageObj.firstItem().click();
     cy.wait(1000);
     CatalogPageObj.addToCartButton().click();
     cy.validateAlert(cartMessage);

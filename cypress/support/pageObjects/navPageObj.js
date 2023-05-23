@@ -16,14 +16,6 @@ class navPageObj {
         return cy.get(':nth-child(4) > .nav-link')
     }
 
-    catalogFirstItem() {
-        return cy.get(':nth-child(1) > .card > .card-block > .card-title > .hrefch')
-    }
-
-    addToCartButton() {
-        return cy.get('.col-sm-12 > .btn')
-    }
-
     signUpButton() {
         return cy.get('#signin2')
     }
