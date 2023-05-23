@@ -4,7 +4,7 @@ import "../support/modules/globalVariables.js";
 describe('SignUp suite', () => {
   })
 
-  it.only('Sign up title', () => {
+  it('Sign up title', () => {
     cy.signUpTitle()
   })
 
