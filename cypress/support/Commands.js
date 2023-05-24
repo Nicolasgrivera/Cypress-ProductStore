@@ -263,9 +263,9 @@ Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousBu
 //---- Go back and forward with the carousel and Image validation ----//
 
 Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
-    
-    for(let n = 0; n <= 2; n ++){
-        let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
+    let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
+    for(let n = 0; n <= imagesSrc.length-1; n ++){
+        imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
         cy.wait(100)
         CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
         CarouselPageObj.nextButton().then(($cnb)=> {
@@ -273,8 +273,8 @@ Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
         });
         
         if(n >= 2){
-            for (let i = 0; i <= 2; i++){
-                let imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
+            for (let i = 0; i <= imagesSrc.length-1; i++){
+                imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
                 cy.wait(100)
                 CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
                 CarouselPageObj.previousButton().then(($cpb)=> {
