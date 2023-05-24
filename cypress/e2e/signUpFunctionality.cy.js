@@ -12,6 +12,14 @@ describe('SignUp suite', () => {
     cy.createRandomUser()
   })
 
-  it('Create already user functionality', ()=>{
+  it.only('Error validation when trying to create an account with an already registered username', ()=>{
     cy.createAlreadyRegisteredUser()
+  })
+
+  it.only('Error validation when trying to create an account without user name', ()=>{
+    cy.createUserWithoutUsername()
+  })
+
+  it.only('Error validation when trying to create an account without password', ()=>{
+    cy.createUserWithoutPassword()
   })

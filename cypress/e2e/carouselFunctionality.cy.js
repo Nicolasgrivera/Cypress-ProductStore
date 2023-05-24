@@ -4,7 +4,7 @@ import "../support/modules/globalVariables.js";
 describe('Carousel suite', () => {
   })
 
-  it.only("Carousel navigation", () =>{
+  it("Carousel navigation", () =>{
     cy.multiclickForCarousel();
 
 })

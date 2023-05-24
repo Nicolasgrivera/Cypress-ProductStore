@@ -60,15 +60,24 @@ Cypress.Commands.add("validateVideo", () =>{
     .should('have.prop', 'paused', true)
     .and('have.prop', 'ended', false)
     .then(($video) =>{
-        $video[0].play()
+        $video[0].play();
     })
 })
 
 //---- JS web alert validation----//
 
 Cypress.Commands.add('validateAlert', (message)=> {
+    cy.wait(1000)
     cy.on('window:alert', (str)=>{
-        expect(str).to.equal(message)
+        expect(str).to.equal(message);
+    })
+    cy.wait(1000)
+    })
+
+Cypress.Commands.add('validateAlertForIncompleteRegistration', ()=> {
+    let signUpErrorMessage = 'Please fill out Username and Password.'
+    cy.on('window:alert',(t)=>{
+        expect(t).to.contains(signUpErrorMessage);
     })
 })
 
@@ -76,7 +85,7 @@ Cypress.Commands.add('validateAlert', (message)=> {
 
 Cypress.Commands.add("formValidation", (input,userInformation) =>{
     cy.wait(500)
-    input(input).should("exist").click().type(userInformation).should('have.value', userInformation)
+    input(input).should("exist").click().type(userInformation).should('have.value', userInformation);
 })
 
 //---- Contact form validations  ----//
@@ -113,23 +122,12 @@ Cypress.Commands.add('loginUser', () => {
   
     let userName = fixtureFile.name;
     let userPassword= fixtureFile.password;
+    
     NavPageObj.logInButton().click()
     cy.wait(500)
     cy.formValidation(inputName,userName);
     cy.formValidation(inputPassword,userPassword);
     LoginPageObj.button().click()
-})
-
-Cypress.Commands.add("welcomeLoginMessageValidation",() => {
-
-    NavPageObj.welcome().then(($wmv)=> {
-        let userName = fixtureFile.name;
-        let message = 'Welcome ' + userName;
-    
-        NavPageObj.welcome().should("exist").should('have.text', message)
-        expect($wmv).to.have.text(message)
-    })
-
 })
 
 Cypress.Commands.add('loginChangesToLogout',()=>{
@@ -153,15 +151,26 @@ Cypress.Commands.add('loginChangesToLogout',()=>{
     })
 })
 
+Cypress.Commands.add("welcomeLoginMessageValidation",() => {
+
+    NavPageObj.welcome().then(($wmv)=> {
+        let userName = fixtureFile.name;
+        let message = 'Welcome ' + userName;
+    
+        NavPageObj.welcome().should("exist").should('have.text', message)
+        expect($wmv).to.have.text(message);
+    })
+
+})
 
 //---- Sign up validations ----//
 
 Cypress.Commands.add('signUpTitle', () => {
-    NavPageObj.signUpButton().click()
+    NavPageObj.signUpButton().click();
     SignUpPageObj.title().then(($sut)=> {
-        let title = "Sign up"
+        let title = "Sign up";
         SignUpPageObj.title().should("exist").should('have.text', title)
-        expect($sut).to.have.text(title)
+        expect($sut).to.have.text(title);
     })
 })
 
@@ -170,7 +179,7 @@ Cypress.Commands.add('createRandomUser', ()=>{
     let signInSuccessMessage = 'Sign up successful.'
     let randomNumber = (Math.random() * Math.random() + Math.random());
 
-    NavPageObj.signUpButton().click()
+    NavPageObj.signUpButton().click();
     cy.wait(1000);
     SignUpPageObj.username().click().type(randomNumber);
     SignUpPageObj.password().click().type(randomNumber);
@@ -189,12 +198,45 @@ Cypress.Commands.add('createAlreadyRegisteredUser', () => {
     let userName = fixtureFile.name;
     let userPassword= fixtureFile.password;
 
-    NavPageObj.signUpButton().click()
-    cy.wait(500)
+    NavPageObj.signUpButton().click();
+    cy.wait(500);
     cy.formValidation(inputName,userName);
     cy.formValidation(inputPassword,userPassword);
-    SignUpPageObj.button().click()
+    SignUpPageObj.button().click();
     cy.validateAlert(signUpErrorMessage);
+})
+
+Cypress.Commands.add('createUserWithoutPassword', () => {
+
+    let signUpErrorMessage = 'Please fill out Username and Password.'
+    
+    let inputName = SignUpPageObj.username;
+    let userName = fixtureFile.name;
+
+    NavPageObj.signUpButton().click();
+    cy.wait(500);
+    cy.formValidation(inputName,userName);
+    SignUpPageObj.button().click();
+    cy.on('window:alert',(t)=>{
+        expect(t).to.contains(signUpErrorMessage);
+     })
+
+})
+
+Cypress.Commands.add('createUserWithoutUsername', () => {
+    
+    let signUpErrorMessage = 'Please fill out Username and Password.'
+    
+    let inputPassword = SignUpPageObj.password;
+    let userPassword= fixtureFile.password;
+
+    NavPageObj.signUpButton().click();
+    cy.wait(500);
+    cy.formValidation(inputPassword,userPassword);
+    SignUpPageObj.button().click();
+    cy.on('window:alert',(t)=>{
+        expect(t).to.contains(signUpErrorMessage);
+     })
 })
 
 //---- Go back and forward with the carousel ----//
@@ -202,13 +244,13 @@ Cypress.Commands.add('createAlreadyRegisteredUser', () => {
 Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousButton() {
 
     for(let n = 0; n <= 2; n ++){
-        cy.wait(1000)
+        cy.wait(1000);
         CarouselPageObj.nextButton().then(($cnb)=> {
             const clickNextButton = $cnb.click();
         })
         if(n >= 2){
             for (let i = 0; i <= 2;i ++){
-                cy.wait(1000)
+                cy.wait(1000);
                 CarouselPageObj.previousButton().then(($cpb)=> {
                     const clickPreviousButton = $cpb.click();
                 })
@@ -221,9 +263,8 @@ Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousBu
 //---- Go back and forward with the carousel and Image validation ----//
 
 Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
-
-    for(let n = 0; n <= 2; n ++){
     
+    for(let n = 0; n <= 2; n ++){
         let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
         cy.wait(100)
         CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
@@ -257,16 +298,4 @@ Cypress.Commands.add("cartFunctionalityValidation", ()=>{
     cy.wait(1000);
     CatalogPageObj.addToCartButton().click();
     cy.validateAlert(cartMessage);
-})
-
-Cypress.Commands.add("welcomeLoginMessageValidation",() => {
-
-    NavPageObj.welcome().then(($wmv)=> {
-        let userName = fixtureFile.name;
-        let message = 'Welcome ' + userName;
-    
-        NavPageObj.welcome().should("exist").should('have.text', message)
-        expect($wmv).to.have.text(message)
-    })
-
 })
