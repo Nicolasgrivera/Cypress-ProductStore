@@ -163,6 +163,20 @@ Cypress.Commands.add("welcomeLoginMessageValidation",() => {
 
 })
 
+//---- LogOut validation ----//
+
+Cypress.Commands.add("logoutChangesToLogin", () => {
+    NavPageObj.logOut().click(); 
+    cy.wait(1000);
+    NavPageObj.logInButton().then(($lin)=> {
+
+        let login = 'Log in';
+
+        NavPageObj.logInButton().should("exist").should('have.text', login)
+        expect($lin).to.have.text(login);
+    })
+})
+
 //---- Sign up validations ----//
 
 Cypress.Commands.add('signUpTitle', () => {

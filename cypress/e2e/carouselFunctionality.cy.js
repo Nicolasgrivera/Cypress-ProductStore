@@ -4,12 +4,11 @@ import "../support/modules/globalVariables.js";
 describe('Carousel suite', () => {
   })
 
-  it("Carousel navigation", () =>{
+  it("Navigation through carousel", () =>{
     cy.multiclickForCarousel();
 
 })
 
-  it.only("Image validation", () =>{
+  it("Images validation", () =>{
     cy.carouselValidation();
-
 })
