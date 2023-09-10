@@ -54,10 +54,6 @@ class catalogPageObj {
     prevPage() {
         return cy.get('#prev2')
     }
-
-    addToCartButton() {
-        return cy.get('.col-sm-12 > .btn')
-    }
 }
 
 export default catalogPageObj

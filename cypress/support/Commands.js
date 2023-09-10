@@ -7,7 +7,10 @@ import signUpPageObj from "./pageObjects/signUpPageObj";
 import catalogPageObj from "./pageObjects/catalogPageObj";
 import fixtureFile from '../fixtures/user.json';
 import carouselPageObj from "./pageObjects/carouselPageObj";
+import cartPageObj from "./pageObjects/cartPageObj";
+import fixtureProducts from "../fixtures/products.json";
 
+let productsFile;
 let testData;
 let NavPageObj;
 let SignUpPageObj
@@ -16,11 +19,17 @@ let AboutUsPageObj;
 let ContactPageObj;
 let CatalogPageObj;
 let CarouselPageObj;
+let CartPageObj;
 
 beforeEach(()=> {
     cy.fixture('user.json').then(function(dataJson) {
       testData = dataJson;
     })
+    cy.fixture('products.json').then(function(productsJson) {
+        productsFile = productsJson;
+    })
+
+
     cy.visit("/");
     NavPageObj = new navPageObj;
     SignUpPageObj = new signUpPageObj;
@@ -29,6 +38,7 @@ beforeEach(()=> {
     ContactPageObj = new contactPageObj;
     CatalogPageObj = new catalogPageObj;
     CarouselPageObj = new carouselPageObj;
+    CartPageObj = new cartPageObj;
 })
 
 //---- Menu access ----//
@@ -305,7 +315,7 @@ Cypress.Commands.add("accessCart", () =>{
     cy.wait(1000);
 })
  
-Cypress.Commands.add("cartFunctionalityValidation", ()=>{
+Cypress.Commands.add("addCartMessageValidation", ()=>{
     let cartMessage = "Product added"
     cy.wait(500);
     CatalogPageObj.firstItem().click();
@@ -313,3 +323,66 @@ Cypress.Commands.add("cartFunctionalityValidation", ()=>{
     CatalogPageObj.addToCartButton().click();
     cy.validateAlert(cartMessage);
 })
+
+/* Beneath command takes a random product from the first page, adds it to the cart
+   validates its title, price and places a order.*/
+
+Cypress.Commands.add("addRandomItemToCart", () =>{
+    let num = Math.random();
+    console.log(num);
+    cy.wait(1500);
+
+    let itemName;
+    let itemPrice;
+
+    if(num <= 0.1){
+        itemName = fixtureProducts.firstItem[0].productName;
+        itemPrice = fixtureProducts.firstItem[0].productPrice;
+        CatalogPageObj.firstItem().click();
+    }else if(num > 0.1 && num <= 0.2){
+        itemName = fixtureProducts.secondItem[0].productName;
+        itemPrice = fixtureProducts.secondItem[0].productPrice;
+        CatalogPageObj.secondItem().click();
+    }else if(num > 0.2 && num <= 0.3){
+        itemName = fixtureProducts.thirdItem[0].productName;
+        itemPrice = fixtureProducts.thirdItem[0].productPrice;
+        CatalogPageObj.thirdItem().click();
+    }else if(num > 0.3 && num <= 0.4){
+        itemName = fixtureProducts.fourthItem[0].productName;
+        itemPrice = fixtureProducts.fourthItem[0].productPrice;
+        CatalogPageObj.forthItem().click();
+    }else if (num > 0.4 && num <= 0.5){
+        itemName = fixtureProducts.fifthItem[0].productName;
+        itemPrice = fixtureProducts.fifthItem[0].productPrice;
+        CatalogPageObj.fifthItem().click();
+    }else if (num > 0.5 && num <= 0.6){
+        itemName = fixtureProducts.sixthItem[0].productName;
+        itemPrice = fixtureProducts.sixthItem[0].productPrice;
+        CatalogPageObj.sixthItem().click();
+    }else if (num > 0.6 && num <= 0.7){
+        itemName = fixtureProducts.seventhItem[0].productName;
+        itemPrice = fixtureProducts.seventhItem[0].productPrice;
+        CatalogPageObj.seventhItem().click();
+    }else if (num > 0.7 && num <= 0.8){
+        itemName = fixtureProducts.eighthItem[0].productName;
+        itemPrice = fixtureProducts.eighthItem[0].productPrice;
+        CatalogPageObj.eightItem().click();
+    }else if (num > 0.8 && num <= 1){
+        itemName = fixtureProducts.ninethItem[0].productName;
+        itemPrice = fixtureProducts.ninethItem[0].productPrice;
+        CatalogPageObj.ninethItem().click();
+    }
+
+    cy.wait(1500);
+    CartPageObj.addToCartButton().click();
+    cy.wait(1000);
+    NavPageObj.cart().click();
+    cy.wait(2000);
+
+    console.log(itemName);
+    CartPageObj.titleContainer()
+    .should('have.text',itemName);
+
+    CartPageObj.priceContainer()
+    .should('have.text',itemPrice);
+}) 

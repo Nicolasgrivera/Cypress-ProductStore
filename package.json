@@ -14,7 +14,7 @@
   "author": "Nicolas Rivera",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^10.3.0"
+    "cypress": "^13.1.0"
   },
   "repository": {
     "type": "git",

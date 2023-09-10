@@ -1,0 +1,37 @@
+{
+    "firstItem":[
+        {"productName": "Samsung galaxy s6", "productPrice": 360}
+    ],
+    "secondItem":[
+        {"productName": "Nokia lumia 1520", "productPrice": 820}
+    ],
+
+    "thirdItem":[
+        {"productName": "Nexus 6", "productPrice": 650}
+    ],
+
+    "fourthItem":[
+        {"productName": "Samsung galaxy s7", "productPrice": 800}
+    ],
+
+    "fifthItem":[
+        {"productName": "Iphone 6 32gb", "productPrice": 790}
+    ],
+
+    "sixthItem":[
+        {"productName": "Sony xperia z5", "productPrice": 320}
+    ],
+
+    "seventhItem":[
+        {"productName": "HTC One M9", "productPrice": 700}
+    ],
+
+    "eighthItem":[
+        {"productName": "Sony vaio i5", "productPrice": 790}
+    ],
+
+    "ninethItem":[
+        {"productName": "Sony vaio i7", "productPrice": 790}
+    ]
+  }
+  
