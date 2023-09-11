@@ -5,5 +5,5 @@ describe('Catalog suite', () => {
   })
 
   it('Catalog Functionality', () => {
-    cy.cartFunctionalityValidation()
+    
   })

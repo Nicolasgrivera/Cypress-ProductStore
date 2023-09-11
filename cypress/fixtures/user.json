@@ -2,5 +2,10 @@
   "name": "Michael Scott Testing",
   "email": "test@test.com",
   "password": "testpassword123",
-  "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+  "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+  "country": "Argentina",
+  "city": "Buenos Aires",
+  "creditCard": "123456789",
+  "month": "July",
+  "year": "2023"
 }

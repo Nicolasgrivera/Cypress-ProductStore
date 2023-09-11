@@ -12,6 +12,10 @@ describe('Cart suite', () => {
     cy.addCartMessageValidation();
   })
 
-  it.only('Adds a random product to the cart and validates its title, price and places and order.', () =>{
+  it('Adds a random product to the cart and validates its title, price and places an order.', () =>{
     cy.addRandomItemToCart();
+  })
+
+  it.only('place an order', () =>{
+    cy.placeAnOrder();
   })

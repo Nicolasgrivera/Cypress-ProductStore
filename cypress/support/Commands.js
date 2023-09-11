@@ -325,12 +325,11 @@ Cypress.Commands.add("addCartMessageValidation", ()=>{
 })
 
 /* Beneath command takes a random product from the first page, adds it to the cart
-   validates its title, price and places a order.*/
+   validates its title and price*/
 
 Cypress.Commands.add("addRandomItemToCart", () =>{
     let num = Math.random();
-    console.log(num);
-    cy.wait(1500);
+    cy.wait(1000);
 
     let itemName;
     let itemPrice;
@@ -374,15 +373,66 @@ Cypress.Commands.add("addRandomItemToCart", () =>{
     }
 
     cy.wait(1500);
-    CartPageObj.addToCartButton().click();
-    cy.wait(1000);
-    NavPageObj.cart().click();
-    cy.wait(2000);
+    cy.addToCartAndGoToCartPage()
+    cy.wait(1500);
 
-    console.log(itemName);
     CartPageObj.titleContainer()
     .should('have.text',itemName);
 
     CartPageObj.priceContainer()
     .should('have.text',itemPrice);
+
 }) 
+
+Cypress.Commands.add("addToCartAndGoToCartPage", ()=>{
+    CartPageObj.addToCartButton().click();
+    cy.wait(1000);
+    NavPageObj.cart().click();
+})
+
+Cypress.Commands.add("placeAnOrder", ()=>{
+    let inputName = CartPageObj.customerName;
+    let inputCountry = CartPageObj.customerCountry;
+    let inputCity = CartPageObj.customerCity;
+    let inputCreditCard = CartPageObj.customerCreditCard;
+    let inputMonth = CartPageObj.customerMonth;
+    let inputYear = CartPageObj.customerYear;
+  
+    let customerName = fixtureFile.name;
+    let customerCountry = fixtureFile.country;
+    let customerCity = fixtureFile.city;
+    let customerCreditCard = fixtureFile.creditCard;
+    let customerMonth = fixtureFile.month;
+    let customerYear = fixtureFile.year;
+
+    let purchaseMessage = "Thank you for your purchase!";
+
+    CatalogPageObj.firstItem().click();
+    cy.wait(1000)
+
+    cy.addToCartAndGoToCartPage();
+    cy.wait(1000)
+    
+    CartPageObj.placeOrderButton().click();
+    cy.wait(500);
+
+    cy.formValidation(inputName,customerName);
+    cy.formValidation(inputCountry,customerCountry);
+    cy.formValidation(inputCity,customerCity);
+    cy.formValidation(inputCreditCard,customerCreditCard);
+    cy.formValidation(inputMonth,customerMonth);
+    cy.formValidation(inputYear,customerYear);
+
+    CartPageObj.purchaseButton().click();
+    
+    CartPageObj.purchaseMessage()
+    .should('contain', purchaseMessage);
+
+    CartPageObj.confirmButton().click();
+
+})
+
+
+//---- Catalog validations----//
+
+
