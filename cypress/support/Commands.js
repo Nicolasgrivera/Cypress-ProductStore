@@ -141,61 +141,57 @@ Cypress.Commands.add('loginUser', () => {
 })
 
 Cypress.Commands.add('loginChangesToLogout',()=>{
-    NavPageObj.logInButton().then(($lin)=> {
 
-        let login = 'Log in';
+    let login = 'Log in';
+    let logout = 'Log out';
 
-        NavPageObj.logInButton().should("exist").should('have.text', login)
-        expect($lin).to.have.text(login);
-    })
+    NavPageObj.logInButton()
+    .should("exist")
+    .and('have.text', login)
 
     cy.loginUser()
     cy.wait(3000)
 
-    NavPageObj.logOut().then(($lout)=>{
-
-        let logout = 'Log out';
-
-        NavPageObj.logOut().should("exist").should('have.text', logout)
-        expect($lout).to.have.text(logout);
-    })
+    NavPageObj.logOut()
+    .should("exist")
+    .and('have.text', logout)
 })
 
 Cypress.Commands.add("welcomeLoginMessageValidation",() => {
 
-    NavPageObj.welcome().then(($wmv)=> {
-        let userName = fixtureFile.name;
-        let message = 'Welcome ' + userName;
+    let userName = fixtureFile.name;
+    let message = 'Welcome ' + userName;
     
-        NavPageObj.welcome().should("exist").should('have.text', message)
-        expect($wmv).to.have.text(message);
-    })
+    NavPageObj.welcome()
+    .should("exist")
+    .and('have.text', message)
 
 })
 
 //---- LogOut validation ----//
 
 Cypress.Commands.add("logoutChangesToLogin", () => {
-    NavPageObj.logOut().click(); 
+
+    let login = 'Log in';
+
+    NavPageObj.logOut().click();
+
     cy.wait(1000);
-    NavPageObj.logInButton().then(($lin)=> {
 
-        let login = 'Log in';
+    NavPageObj.logInButton()
+    .should("exist")
+    .and('have.text', login)
 
-        NavPageObj.logInButton().should("exist").should('have.text', login)
-        expect($lin).to.have.text(login);
-    })
 })
 
 //---- Sign up validations ----//
 
 Cypress.Commands.add('signUpTitle', () => {
     NavPageObj.signUpButton().click();
-    SignUpPageObj.title().then(($sut)=> {
         let title = "Sign up";
-        SignUpPageObj.title().should("exist").should('have.text', title)
-        expect($sut).to.have.text(title);
-    })
+        SignUpPageObj.title()
+        .should("exist")
+        .and('have.text', title)
 })
 
 Cypress.Commands.add('createRandomUser', ()=>{
@@ -205,8 +201,13 @@ Cypress.Commands.add('createRandomUser', ()=>{
 
     NavPageObj.signUpButton().click();
     cy.wait(1000);
-    SignUpPageObj.username().click().type(randomNumber);
-    SignUpPageObj.password().click().type(randomNumber);
+
+    SignUpPageObj.username()
+    .click().type(randomNumber);
+
+    SignUpPageObj.password()
+    .click().type(randomNumber);
+
     SignUpPageObj.button().click();
     cy.validateAlert(signInSuccessMessage);
     
@@ -269,15 +270,11 @@ Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousBu
 
     for(let n = 0; n <= 2; n ++){
         cy.wait(1000);
-        CarouselPageObj.nextButton().then(($cnb)=> {
-            const clickNextButton = $cnb.click();
-        })
+        CarouselPageObj.nextButton().click()
         if(n >= 2){
             for (let i = 0; i <= 2;i ++){
                 cy.wait(1000);
-                CarouselPageObj.previousButton().then(($cpb)=> {
-                    const clickPreviousButton = $cpb.click();
-                })
+                CarouselPageObj.previousButton().click()
             }
             
         }
@@ -288,22 +285,23 @@ Cypress.Commands.add('multiclickForCarousel', function carouselNextAndPreviousBu
 
 Cypress.Commands.add('carouselValidation', function imageAndCarousel() {
     let imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
+
     for(let n = 0; n <= imagesSrc.length-1; n ++){
-        imagesSrc = [('Samsung1.jpg'), ('nexus1.jpg'), ('iphone1.jpg')]
         cy.wait(100)
-        CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[n])
-        CarouselPageObj.nextButton().then(($cnb)=> {
-            const clickNextButton = $cnb.click();
-        });
+        CarouselPageObj.actualImage()
+        .should('have.attr', 'src', imagesSrc[n])
+
+        CarouselPageObj.nextButton().click();
         
         if(n >= 2){
             for (let i = 0; i <= imagesSrc.length-1; i++){
                 imagesSrc = [('Samsung1.jpg'), ('iphone1.jpg'), ('nexus1.jpg')]
+
                 cy.wait(100)
-                CarouselPageObj.actualImage().should('have.attr', 'src', imagesSrc[i])
-                CarouselPageObj.previousButton().then(($cpb)=> {
-                    const clickPreviousButton = $cpb.click();
-                });
+                CarouselPageObj.actualImage()
+                .should('have.attr', 'src', imagesSrc[i])
+
+                CarouselPageObj.previousButton().click()
         }}
 
 }})
@@ -338,34 +336,42 @@ Cypress.Commands.add("addRandomItemToCart", () =>{
         itemName = fixtureProducts.firstItem[0].productName;
         itemPrice = fixtureProducts.firstItem[0].productPrice;
         CatalogPageObj.firstItem().click();
+
     }else if(num > 0.1 && num <= 0.2){
         itemName = fixtureProducts.secondItem[0].productName;
         itemPrice = fixtureProducts.secondItem[0].productPrice;
         CatalogPageObj.secondItem().click();
+
     }else if(num > 0.2 && num <= 0.3){
         itemName = fixtureProducts.thirdItem[0].productName;
         itemPrice = fixtureProducts.thirdItem[0].productPrice;
         CatalogPageObj.thirdItem().click();
+
     }else if(num > 0.3 && num <= 0.4){
         itemName = fixtureProducts.fourthItem[0].productName;
         itemPrice = fixtureProducts.fourthItem[0].productPrice;
         CatalogPageObj.forthItem().click();
+
     }else if (num > 0.4 && num <= 0.5){
         itemName = fixtureProducts.fifthItem[0].productName;
         itemPrice = fixtureProducts.fifthItem[0].productPrice;
         CatalogPageObj.fifthItem().click();
+
     }else if (num > 0.5 && num <= 0.6){
         itemName = fixtureProducts.sixthItem[0].productName;
         itemPrice = fixtureProducts.sixthItem[0].productPrice;
         CatalogPageObj.sixthItem().click();
+        
     }else if (num > 0.6 && num <= 0.7){
         itemName = fixtureProducts.seventhItem[0].productName;
         itemPrice = fixtureProducts.seventhItem[0].productPrice;
         CatalogPageObj.seventhItem().click();
+        
     }else if (num > 0.7 && num <= 0.8){
         itemName = fixtureProducts.eighthItem[0].productName;
         itemPrice = fixtureProducts.eighthItem[0].productPrice;
         CatalogPageObj.eightItem().click();
+
     }else if (num > 0.8 && num <= 1){
         itemName = fixtureProducts.ninethItem[0].productName;
         itemPrice = fixtureProducts.ninethItem[0].productPrice;
@@ -412,7 +418,7 @@ Cypress.Commands.add("placeAnOrder", ()=>{
 
     cy.addToCartAndGoToCartPage();
     cy.wait(1000)
-    
+
     CartPageObj.placeOrderButton().click();
     cy.wait(500);
 
@@ -434,5 +440,7 @@ Cypress.Commands.add("placeAnOrder", ()=>{
 
 
 //---- Catalog validations----//
+
+
 
 

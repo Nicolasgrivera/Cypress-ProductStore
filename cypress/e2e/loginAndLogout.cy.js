@@ -18,7 +18,7 @@ it('Login user. Nav correctly changes "sign in" to a welcome message', () => {
   cy.welcomeLoginMessageValidation();
 })
 
-it.only('Login user and LogOut. Nav correctly changes "log in" to a Logout', () => {
+it('Login user and LogOut. Nav correctly changes "log in" to a Logout', () => {
   cy.loginChangesToLogout()
   cy.logoutChangesToLogin()
 })

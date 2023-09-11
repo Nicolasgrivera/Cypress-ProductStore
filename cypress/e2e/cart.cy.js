@@ -8,7 +8,7 @@ describe('Cart suite', () => {
     cy.accessCart();
   })
 
-  it.skip('Add a product to Cart and pop up message validation', () => {
+  it('Add a product to Cart and pop up message validation', () => {
     cy.addCartMessageValidation();
   })
 
@@ -16,6 +16,6 @@ describe('Cart suite', () => {
     cy.addRandomItemToCart();
   })
 
-  it.only('place an order', () =>{
+  it('place an order', () =>{
     cy.placeAnOrder();
   })

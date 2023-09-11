@@ -4,6 +4,14 @@ import "../support/modules/globalVariables.js";
 describe('Catalog suite', () => {
   })
 
-  it('Catalog Functionality', () => {
+  it('Filter by Phones', () => {
+    
+  })
+
+  it('Filter by Laptops', () => {
+    
+  })
+
+  it('Filter by Monitors', () => {
     
   })
