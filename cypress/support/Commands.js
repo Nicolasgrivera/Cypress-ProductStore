@@ -10,8 +10,6 @@ import carouselPageObj from "./pageObjects/carouselPageObj";
 import cartPageObj from "./pageObjects/cartPageObj";
 import fixtureProducts from "../fixtures/products.json";
 
-//let productsFile;
-//let testData;
 let NavPageObj;
 let SignUpPageObj
 let LoginPageObj;
@@ -23,12 +21,10 @@ let CartPageObj;
 
 beforeEach(()=> {
     cy.fixture('user.json').as("fixtureFile")
-    cy.fixture('products.json').as("fixtureProducts")//.then(function(productsJson) {
-        //productsFile = productsJson;
-    //})
-
+    cy.fixture('products.json').as("fixtureProducts")
 
     cy.visit("/");
+    
     NavPageObj = new navPageObj;
     SignUpPageObj = new signUpPageObj;
     LoginPageObj = new loginPageObj;
